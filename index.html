@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookshelf &mdash; Managing your book properly</title>
+
+    <link rel="stylesheet" href="assets/main.css">
+</head>
+
+<body>
+    <header>
+        <div class="jumbotron">
+            <section class="right mobile">
+                <img src="assets/img/jumbotron.jpeg"
+                    alt="seorang wanita yang duduk dan menghadap ke depan sambil membuka laptop">
+            </section>
+            <section class="left">
+                <h1 class="title">
+                    My Bookshelf
+                </h1>
+                <div class="subtitle">
+                    <p>
+                        Managing your book properly,
+                    </p>
+                    <p>
+                        Boost your productivity.
+                    </p>
+                </div>
+                <p>
+                    <a href="#manage" class="button-primary">Manage Now</a>
+                </p>
+            </section>
+            <section class="right desktop">
+                <img src="assets/img/jumbotron.jpeg"
+                    alt="seorang wanita yang duduk dan menghadap ke depan sambil membuka laptop">
+            </section>
+        </div>
+    </header>
+
+    <main id="manage">
+        <section class="search">
+            <form id="searchBook">
+                <input id="searchBookTitle" type="text" placeholder="Search book by title">
+            </form>
+        </section>
+
+        <section class="books">
+            <div class="book">
+                <h2 class="h2 text-center">
+                    <span>Book List</span>
+                </h2>
+                <a class="button-add">Add new book </a>
+                <div class="form-container">
+                    <form id="book">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input class="form-control" id="title" type="text" placeholder="Book title">
+                        </div>
+                        <div class="form-group">
+                            <label for="author">Author</label>
+                            <input class="form-control" id="author" type="text" placeholder="Book author">
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <input class="form-control" id="year" type="number" placeholder="Year publish">
+                        </div>
+                        <div class="form-group">
+                            <input id="isComplete" type="checkbox">
+                            <label for="isComplete">Already read?</label>
+                        </div>
+                        <div class="form-group">
+                            <button class="button-save" id="saveBook" type="button">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="unfinished-read" class="list-group">
+                </div>
+            </div>
+            <div class="book">
+                <h2 class="h2 text-center">
+                    <span>Finished Read</span>
+                </h2>
+                <a class="button-clear">Clear all</a>
+                <div id="finished-read" class="list-group">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Copyright 2021 <a href="https://virgiawan.id" target="_blank">Virgiawan Teguh Kusuma</p>
+    </footer>
+
+    <script src="assets/main.js"></script>
+</body>
+
+</html>
