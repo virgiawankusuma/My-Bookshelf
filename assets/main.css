@@ -107,7 +107,7 @@ h6 {
   width: 100%;
 }
 
-.books {
+.book-container {
   margin: 10vh 0;
   display: table;
   table-layout: fixed;
@@ -115,41 +115,50 @@ h6 {
   padding:16px;
 }
 
-.books .book {
+.book-container .book {
   display: table-cell;
   padding: 10px;
-  /* flex-grow: 1; */
-  /* flex-basis: 50%; */
-  /* width: max-content; */
-  /* max-width: 50%; */
-  /* align-self: flex-start; */
-  /* flex-direction: column; */
-  /* flex-basis: 50%; */
-  /* flex-grow: 1; */
 }
 
 .button-primary {
   margin: 40px auto;
   display: inline-block;
+  position: relative;
   text-decoration: none;
   font-size: 20px;
   color: #ffffff;
   padding: 10px 20px;
-  background-color: #035a54;
+  background-color: #392330;
   border: none;
   border-radius: 50px;
   cursor: pointer;
+  overflow: hidden;
+  transition: all 0.1s ease 0s;
 }
 
-.button-primary:hover,
-.button-primary:active {
-  background-color: #392330;
+.button-primary:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 0%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0.2;
+  transform: skewX(-45deg);
+  transition: width .3s;
+}
+
+.button-primary:hover:after, .button-primary:active:after {
+  width: 120%;
 }
 
 .button-add {
   display: block;
+  position: relative;
   text-align: center;
-  background-color: #035a54;
+  background-color: #392330;
   color: #ffffff;
   margin: 10px auto 0px auto;
   padding: 10px 20px;
@@ -158,17 +167,34 @@ h6 {
   border-radius: 100px;
   font-size: 15px;
   cursor: pointer;
+  overflow: hidden;
+  transition: all 0.1s ease 0s;
+}
+
+.button-add:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 0%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0.2;
+  transform: skewX(-45deg);
+  transition: width .3s;
 }
 
 .button-add .active,
-.button-add:hover {
-  background-color: #392330;
+.button-add:hover:after {
+  width: 120%;
 }
 
 .button-clear {
   display: block;
+  position: relative;
   text-align: center;
-  background-color: #ce9c77;
+  background-color: #b88863;
   color: #ffffff;
   margin: 10px auto 0px auto;
   padding: 10px 20px;
@@ -177,15 +203,31 @@ h6 {
   border-radius: 100px;
   font-size: 15px;
   cursor: pointer;
+  overflow: hidden;
+  transition: all 0.1s ease 0s;
 }
 
-.button-clear .active,
-.button-clear:hover {
-  background-color: #b88863;
+.button-clear:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 0%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0.2;
+  transform: skewX(-45deg);
+  transition: width .3s;
+}
+
+
+.button-clear:hover:after {
+  width: 120%;
 }
 
 .button-save {
-  display: block;
+  display: none;
   text-align: center;
   background-color: #035a54;
   color: #ffffff;
@@ -212,6 +254,7 @@ h6 {
   border: 0;
   border-radius: 100px;
   cursor: pointer;
+  transition: all 0.2s ease-out;
 }
 
 .button-finish .active,
@@ -220,6 +263,23 @@ h6 {
 .button-unfinish:hover {
   border: 0;
   background-color: #392330;
+}
+
+.button-edit {
+  display: inline;
+  background-color: #f5eee4;
+  color: #392330;
+  margin: 10px 5px 0px auto;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.button-edit .active,
+.button-edit:hover {
+  filter: brightness(0.9);
 }
 
 .button-delete {
@@ -231,6 +291,7 @@ h6 {
   border: 0;
   border-radius: 100px;
   cursor: pointer;
+  transition: all 0.2s ease-out;
 }
 
 .button-delete .active,
@@ -344,7 +405,7 @@ footer a:active {
     margin: 20px auto;
   }
 
-  .books {
+  .book-container {
     display: block;
   }
 }

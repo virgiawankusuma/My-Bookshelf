@@ -1,12 +1,17 @@
 const buttonAdd = document.querySelector(".button-add");
 const buttonClear = document.querySelector(".button-clear");
 const formContainer = document.querySelector(".form-container");
+const saveBook = document.getElementById("saveBook");
+const updateBook = document.getElementById("updateBook");
 
 // accordion
 buttonAdd.addEventListener("click", function () {
   buttonAdd.classList.toggle("active");
+  saveBook.style.display = "block";
+  updateBook.style.display = "none";
   if (formContainer.style.display == "block") {
     formContainer.style.display = "none";
+
   } else {
     formContainer.style.display = "block";
   }
@@ -15,7 +20,6 @@ buttonAdd.addEventListener("click", function () {
 // web storage requirement
 const localStorageKey = "bookshelfApp";
 let bookshelfApp = [];
-const saveBook = document.getElementById("saveBook");
 
 // check browser support storage
 const checkSupportedStorage = () => {
@@ -41,6 +45,14 @@ const searchBook = (kw) => {
 const addBook = (Obj, localStorageKey) => {
   bookshelfApp.push(Obj);
   localStorage.setItem(localStorageKey, JSON.stringify(bookshelfApp));
+};
+
+// update book in localStorage
+const editBook = (book, Obj) => {
+  const index = bookshelfApp.findIndex((b) => b.id === book.id);
+  bookshelfApp[index] = Obj;
+  localStorage.setItem(localStorageKey, JSON.stringify(bookshelfApp));
+  renderBooks(bookshelfApp);
 };
 
 // delete book from localStorage
@@ -106,22 +118,87 @@ const renderBooks = (bookshelfApp) => {
     // book action child
     const buttonRead = document.createElement("button");
 
+    const iconCheck = document.createElement("i");
+    iconCheck.classList.add("fas", "fa-check");
+
+    const iconEdit = document.createElement("i");
+    iconEdit.classList.add("fas", "fa-edit");
+
+    const iconUncheck = document.createElement("i");
+    iconUncheck.classList.add("fas", "fa-undo");
+
+    const iconDelete = document.createElement("i");
+    iconDelete.classList.add("fas", "fa-trash");
+
     if (books[book].isComplete) {
       buttonRead.classList.add("button-finish");
-      buttonRead.innerHTML = "Not finished read";
+      buttonRead.append(iconUncheck);
       buttonRead.addEventListener("click", () => {
         unfinishedRead(book);
       });
     } else {
       buttonRead.classList.add("button-unfinish");
-      buttonRead.innerHTML = "Finished read";
+      buttonRead.append(iconCheck);
       buttonRead.addEventListener("click", () => {
         finishedRead(book);
       });
     }
+
+    const buttonEdit = document.createElement("button");
+    buttonEdit.classList.add("button-edit");
+    buttonEdit.append(iconEdit);
+    buttonEdit.addEventListener("click", () => {
+      saveBook.style.display = "none";
+      updateBook.style.display = "block";
+      if (formContainer.style.display == "block") {
+        formContainer.style.display = "none";
+      } else {
+        formContainer.style.display = "block";
+      }
+
+      const title = document.getElementById("title");
+      const author = document.getElementById("author");
+      const year = document.getElementById("year");
+      const isComplete = document.getElementById("isComplete");
+
+      title.value = books[book].title;
+      author.value = books[book].author;
+      year.value = books[book].year;
+      isComplete.checked = books[book].isComplete;
+      
+      updateBook.addEventListener("click", () => {
+        const bookObj = {
+          id: books[book].id,
+          title: title.value,
+          author: author.value,
+          year: year.value,
+          isComplete: isComplete.checked,
+        };
+        // checking blank field
+        if (title.value && author.value && year.value) {
+          // run addBook function for add book data to localStorage
+          editBook(books[book], bookObj);
+        } else {
+          return alert("The field can't be blank");
+        }
+
+        // clear all input value
+        const inputs = document.querySelectorAll("input");
+        inputs.forEach((input) => (input.value = ""));
+
+        // hide accordion
+        formContainer.style.display = "none";
+        
+        renderBooks(bookshelfApp);
+        
+        alert("Success, your book have been update");
+      });
+    });
+
+
     const buttonDelete = document.createElement("button");
     buttonDelete.classList.add("button-delete");
-    buttonDelete.innerHTML = "Delete book";
+    buttonDelete.append(iconDelete);
     buttonDelete.addEventListener("click", () => {
       let confirmDelete = confirm(
         "Are you sure you want to delete the book '" + books[book].title + "'?"
@@ -131,7 +208,7 @@ const renderBooks = (bookshelfApp) => {
       }
     });
 
-    bookAction.append(buttonRead, buttonDelete);
+    bookAction.append(buttonRead, buttonEdit, buttonDelete);
 
     // append book detail and action
     listGroupItem.append(bookDetail, bookAction);
@@ -154,8 +231,7 @@ searchBookForm.addEventListener("submit", (e) => {
 });
 
 // button save event handler
-saveBook.addEventListener("click", function (event) {
-  // input value from add new book form
+saveBook.addEventListener("click", function () {
   const title = document.getElementById("title");
   const author = document.getElementById("author");
   const year = document.getElementById("year");
